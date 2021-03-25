@@ -223,7 +223,7 @@ std::deque<Ant*> AntMenu(World* world) {
     bool chosen_ant = 0;
     int ant_type;
     do {
-      std::cout << "Quiere hormigas en el sentido normal (1) o invertido (2)?  ";
+      std::cout << "Quiere hormigas en el sentido normal (1) o invertido (2)? ";
       std::cin >> ant_type;
       if ((ant_type == 1) || (ant_type == 2)) {
         chosen_ant = 1;
