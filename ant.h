@@ -2,8 +2,8 @@
  * @file ant.h
  * @author Pablo Pérez González (alu0101318318@ull.edu.es)
  * @brief Programa que recrea el comportamioento de La Hormiga de Langton en C++
- * @version 0.3
- * @date 2021-03-15
+ * @version 0.4
+ * @date 2021-03-25
  * 
  * @copyright Copyright (c) 2021
  * 
