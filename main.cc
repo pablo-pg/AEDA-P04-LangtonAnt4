@@ -17,7 +17,7 @@
 int start_menu();
 World* InfinitMenu();
 World* FinitMenu();
-std::deque<Ant> AntMenu(World* world);
+std::deque<Ant*> AntMenu(World* world);
 
 
 int main() {
@@ -66,7 +66,7 @@ int start_menu() {
       std::cout << "No ha elegido una opción correcta" << std::endl;
     }
   }
-  std::deque<Ant> ants;
+  std::deque<Ant*> ants;
   ants = AntMenu(world);
   Universe(*world, type, ants);
   return 0;
@@ -183,9 +183,9 @@ World* FinitMenu() {
 }
 
 
-std::deque<Ant> AntMenu(World* world) {
+std::deque<Ant*> AntMenu(World* world) {
   bool good_num = 0;
-  std::deque<Ant> ants;
+  std::deque<Ant*> ants;
   int ants_num;
   while (good_num == 0) {
     std::cout << std::endl << "Introduzca el número de hormigas que desea: ";
@@ -220,7 +220,9 @@ std::deque<Ant> AntMenu(World* world) {
               << " leftUp, rightUp, downRight, downLeft): ";
     std::string dir;
     std::cin >> dir;
-    Ant new_ant(x_pos, y_pos, mapped_directions[dir], world->GetMatrix());
+    Ant* new_ant;
+    new_ant = new Ant_A();
+    new_ant->SetData(x_pos, y_pos, mapped_directions[dir], world->GetMatrix());
     ants.push_back(new_ant);
   }
   return ants;

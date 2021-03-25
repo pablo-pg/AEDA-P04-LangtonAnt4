@@ -20,7 +20,7 @@
 #include "./world.h"
 
 
-class FinitWorld : public World{
+class FinitWorld : public World {
  public:
   virtual ~FinitWorld() {}
 

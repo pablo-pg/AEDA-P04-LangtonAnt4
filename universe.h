@@ -16,14 +16,14 @@
 #include <iostream>
 #include <system_error>
 
-#include "./ant.h"
+#include "./ant_a.h"
 #include "./infinity_world.h"
 #include "./finit_world.h"
 
 class Universe {
  public:
   Universe();
-  Universe(World& world, const WorldType& type, const std::deque<Ant>& ants);
+  Universe(World& world, const WorldType& type, const std::deque<Ant*>& ants);
   ~Universe() {}
 
   void Simulate(const int& paint_mode);
@@ -33,7 +33,7 @@ class Universe {
   void Paint(const uint& step);
   KnowAnt AreAnts(const uint& i, const uint& j);
   uint steps_;
-  std::deque<Ant> ant_list_;
+  std::deque<Ant*> ant_list_;
   World* world_;
   WorldType infinity_;
   Matrix<States> cells_;
