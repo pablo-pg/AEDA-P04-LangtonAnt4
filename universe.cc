@@ -42,7 +42,7 @@ Universe::Universe(World& world, const WorldType& type,
 void Universe::Simulate(const int& paint_mode) {
   for (uint i {0}; i < steps_; ++i) {
     int north_count = 0;
-    system("clear");
+    // system("clear");
     if (paint_mode == 1) {
       StandardPaint(i);
     } else {
@@ -115,9 +115,9 @@ void Universe::Paint(const uint& step) {
       << static_cast<int>(ant_list_.at(i)->GetHInfLimit() + ant_list_.at(i)->GetHPos())
       << ", "
       << static_cast<int>(ant_list_.at(i)->GetVInfLimit() + ant_list_.at(i)->GetVPos())
-      << ")" << std::setw(40) << "Paso: " << step + 1 << std::endl
-      << std::endl;
+      << ")" << std::endl;
   }
+  std::cout << "Paso: " << step + 1 << std::endl;
   std::cout << "\u2554";
   for (uint i {0}; i < cells_.size(); ++i) {
     std::cout << "\u2550";

@@ -13,8 +13,8 @@
 
 CC=g++
 CFLAGS=-O0 -g
-DEPS = universe.h ant.h infinity_world.h finit_world.h world.h expand.h ant_a.h
-OBJ = main.o universe.o ant.o infinity_world.o finit_world.o expand.o ant_a.o
+DEPS = universe.h ant.h infinity_world.h finit_world.h world.h expand.h ant_a.h ant_b.h
+OBJ = main.o universe.o ant.o infinity_world.o finit_world.o expand.o ant_a.o ant_b.o
 
 %.o: %.cc $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

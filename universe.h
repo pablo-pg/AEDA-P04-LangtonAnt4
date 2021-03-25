@@ -17,6 +17,7 @@
 #include <system_error>
 
 #include "./ant_a.h"
+#include "./ant_b.h"
 #include "./infinity_world.h"
 #include "./finit_world.h"
 

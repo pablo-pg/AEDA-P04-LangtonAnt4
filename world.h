@@ -12,12 +12,14 @@
 #ifndef WORLD_H_
 #define WORLD_H_
 
-#include <iostream>
-#include <vector>
-#include <thread>
+#include <deque>
 #include <iomanip>
+#include <iostream>
+#include <thread>
+#include <vector>
 
 #include "./ant_a.h"
+#include "./ant_b.h"
 
 
 class World {
