@@ -85,26 +85,566 @@ void Ant::Move() {
     RecalculatePos();
     if (cells_.at(position_.first).at(position_.second) == black) {
       cells_.at(position_.first).at(position_.second) = white;
-      InfinityTurnLeft();
+      Turn(turn_left);
+      InfAdvance();
+      // InfinityTurnLeft();
     } else if (cells_.at(position_.first).at(position_.second) == white) {
       cells_.at(position_.first).at(position_.second) = black;
-      InfinityTurnRight();
+      Turn(turn_right);
+      InfAdvance();
+      // InfinityTurnRight();
     }
   } else {
     if (cells_.at(position_.first).at(position_.second) == black) {
       cells_.at(position_.first).at(position_.second) = white;
-      FinityTurnLeft();
+      Turn(turn_left);
+      FinAdvance();
+      // FinityTurnLeft();
     } else if (cells_.at(position_.first).at(position_.second) == white) {
       cells_.at(position_.first).at(position_.second) = black;
-      FinityTurnRight();
+      Turn(turn_right);
+      FinAdvance();
+      // FinityTurnRight();
     }
   }
 }
 
 
-void Ant::InfinityTurnLeft() {
-  if (direction_ == up) {                 /// up -> leftUp
-    direction_ = leftUp;
+// void Ant::InfinityTurnLeft() {
+//   if (direction_ == up) {                 /// up -> leftUp
+// //     direction_ = leftUp;
+// //     position_ = std::make_pair(position_.first - 1, position_.second + 1);
+// //     if ((position_.first == 0)
+// //                 && ((size_t)position_.second >= cells_.at(0).size() - 1)) {
+// //       h_limit_.inferior -= kExpansion;
+// //       v_limit_.superior += kExpansion;
+// //       position_ = std::make_pair(position_.first+kExpansion, position_.second);
+// //       cells_ = expandM(exp_left, cells_);
+// //       for (size_t i {0}; i < cells_.size(); ++i) {
+// //         cells_ .at(i) = expand(exp_right, cells_.at(i));
+// //       }
+// //     } else if (position_.first == 0) {
+// //       cells_ = expandM(exp_left, cells_);
+// //       h_limit_.inferior -= kExpansion;
+// //       position_ = std::make_pair(position_.first+kExpansion, position_.second);
+// //     } else if ((size_t)position_.second >= cells_.at(0).size() - 1) {
+// //       v_limit_.superior += kExpansion;
+// //       for (size_t i {0}; i < cells_.size(); ++i) {
+// //         cells_ .at(i) = expand(exp_right, cells_.at(i));
+// //       }
+// //     }
+//   } else if (direction_ == left) {        /// left -> downLeft
+//   //   direction_ = downLeft;
+//   //   position_ = std::make_pair(position_.first - 1, position_.second - 1);
+//   //   if ((position_.first == 0) && (position_.second == 0)) {
+//   //     v_limit_.inferior -= kExpansion;
+//   //     h_limit_.inferior -= kExpansion;
+//   //     position_ = std::make_pair(position_.first+kExpansion, position_.second);
+//   //     position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//   //      cells_ = expandM(exp_left, cells_);
+//   //     for (size_t i {0}; i < cells_.size(); ++i) {
+//   //       cells_ .at(i) = expand(exp_left, cells_.at(i));
+//   //     }
+//     // } else if (position_.first == 0) {
+//     //   cells_ = expandM(exp_left, cells_);
+//     //   h_limit_.inferior -= kExpansion;
+//     //   position_ = std::make_pair(position_.first+kExpansion, position_.second);
+//     // } else if (position_.second == 0) {
+//     //   for (size_t i {0}; i < cells_.size(); ++i) {
+//     //     cells_ .at(i) = expand(exp_left, cells_.at(i));
+//     //   }
+//     //   v_limit_.inferior -= kExpansion;
+//     //   position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//     // }
+//   } else if (direction_ == down) {        /// down -> downRight
+//     // direction_ = downRight;
+//     // position_ = std::make_pair(position_.first + 1, position_.second - 1);
+//     //   if ((size_t)position_.first == cells_.size() - 1) {
+//     //      cells_ = expandM(exp_right, cells_);
+//     //     h_limit_.inferior += kExpansion;
+//     // } else if (position_.second == 0) {
+//     //   for (size_t i {0}; i < cells_.size(); ++i) {
+//     //     cells_ .at(i) = expand(exp_left, cells_.at(i));
+//     //   }
+//     //   position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//     //   v_limit_.inferior -= kExpansion;
+//     // } else if (((size_t)position_.first == cells_.size() - 1)
+//     //           && (position_.second == 0)) {
+//     //   cells_ = expandM(exp_right, cells_);
+//     //   v_limit_.inferior -= kExpansion;
+//     //   h_limit_.inferior += kExpansion;
+//     //   position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//     //   for (size_t i {0}; i < cells_.size(); ++i) {
+//     //     cells_ .at(i) = expand(exp_left, cells_.at(i));
+//     //   }
+//     // }
+//   } else if (direction_ == right) {       /// right -> rightUp
+//     // direction_ = rightUp;
+//     // position_ = std::make_pair(position_.first + 1, position_.second + 1);
+//     // if ((size_t)position_.first == cells_.size() - 1) {
+//     //    cells_ = expandM(exp_right, cells_);
+//     //   h_limit_.superior += kExpansion;
+//     // } else if ((size_t)position_.second >= cells_.at(0).size() - 1) {
+//     //   for (size_t i {0}; i < cells_.size(); ++i) {
+//     //     cells_ .at(i) = expand(exp_right, cells_.at(i));
+//     //   }
+//     //   v_limit_.superior += kExpansion;
+//     // } else if (((size_t)position_.first >= cells_.at(0).size() - 1)
+//     //             && ((size_t)position_.second >= cells_.at(0).size() - 1)) {
+//     //    cells_ = expandM(exp_right, cells_);
+//     //     v_limit_.superior += kExpansion;
+//     //     h_limit_.superior += kExpansion;
+//     //   for (size_t i {0}; i < cells_.size(); ++i) {
+//     //     cells_ .at(i) = expand(exp_right, cells_.at(i));
+//     //   }
+//     // }
+//   } else if (direction_ == leftUp) {        /// DIAGONALES
+//     // direction_ = left;                    /// leftUp -> left
+//     // position_ = std::make_pair(position_.first - 1, position_.second);
+//     // if (position_.first == 0) {
+//     //   cells_ = expandM(exp_left, cells_);
+//     //   h_limit_.inferior -= kExpansion;
+//     //   position_ = std::make_pair(position_.first+kExpansion, position_.second);
+//     // }
+//   } else if (direction_ == downLeft) {    /// downLeft -> down
+//     // direction_ = down;
+//     // position_ = std::make_pair(position_.first, position_.second - 1);
+//     // if (position_.second == 0) {
+//     //   for (size_t i {0}; i < cells_.size(); ++i) {
+//     //     cells_ .at(i) = expand(exp_left, cells_.at(i));
+//     //   }
+//     //   v_limit_.inferior -= kExpansion;
+//     //   position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//     // }
+//   } else if (direction_ == downRight) {   /// downRight -> right
+//     // direction_ = right;
+//     // position_ = std::make_pair(position_.first + 1, position_.second);
+//     // if ((size_t)position_.first == cells_.size() - 1) {
+//     //    cells_ = expandM(exp_right, cells_);
+//     //   h_limit_.superior += kExpansion;
+//     // }
+//   } else if (direction_ == rightUp) {     /// rightUp -> up
+//     // direction_ = up;
+//     // position_ = std::make_pair(position_.first, position_.second + 1);
+//     // if (position_.second == static_cast<int>(cells_.at(0).size()) - 1) {
+//     //   for (size_t i {0}; i < cells_.size(); ++i) {
+//     //     cells_ .at(i) = expand(exp_right, cells_.at(i));
+//     //   }
+//     //   v_limit_.superior += kExpansion;
+//     // }
+//   }
+// }
+
+
+
+// void Ant::InfinityTurnRight() {
+//   if (direction_ == left) {               /// left -> leftUp
+//     direction_ = leftUp;
+//     position_ = std::make_pair(position_.first - 1, position_.second + 1);
+//     if (position_.first == 0) {
+//       cells_ = expandM(exp_left, cells_);
+//       h_limit_.inferior -= kExpansion;
+//       position_ = std::make_pair(position_.first+kExpansion, position_.second);
+//     } else if ((size_t)position_.second >= cells_.at(0).size() - 1) {
+//       v_limit_.superior += kExpansion;
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_right, cells_.at(i));
+//       }
+//     } else if ((position_.first == 0)
+//                 && ((size_t)position_.second >= cells_.at(0).size() - 1)) {
+//       h_limit_.inferior -= kExpansion;
+//       v_limit_.superior += kExpansion;
+//       position_ = std::make_pair(position_.first+kExpansion, position_.second);
+//        cells_ = expandM(exp_left, cells_);
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_right, cells_.at(i));
+//       }
+//     }
+//   } else if (direction_ == up) {          /// up -> rightUp
+//     direction_ = rightUp;
+//     position_ = std::make_pair(position_.first + 1, position_.second + 1);
+//     if ((size_t)position_.first == cells_.size() - 1) {
+//        cells_ = expandM(exp_right, cells_);
+//       h_limit_.superior += kExpansion;
+//     } else if ((size_t)position_.second >= cells_.at(0).size() - 1) {
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_right, cells_.at(i));
+//       }
+//       v_limit_.superior += kExpansion;
+//     } else if (((size_t)position_.first >= cells_.at(0).size() - 1)
+//                 && ((size_t)position_.second >= cells_.at(0).size() - 1)) {
+//       cells_ = expandM(exp_right, cells_);
+//       v_limit_.superior += kExpansion;
+//       h_limit_.superior += kExpansion;
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_right, cells_.at(i));
+//       }
+//     }
+//   } else if (direction_ == right) {       /// right -> downRight
+//     direction_ = downRight;
+//     position_ = std::make_pair(position_.first + 1, position_.second - 1);
+//       if ((size_t)position_.first == cells_.size() - 1) {
+//         cells_ = expandM(exp_right, cells_);
+//         h_limit_.inferior += kExpansion;
+//     } else if (position_.second == 0) {
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_left, cells_.at(i));
+//       }
+//       position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//       v_limit_.inferior -= kExpansion;
+//     } else if (((size_t)position_.first == cells_.size() - 1)
+//               && (position_.second == 0)) {
+//       cells_ = expandM(exp_right, cells_);
+//       v_limit_.inferior -= kExpansion;
+//       h_limit_.inferior += kExpansion;
+//       position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_left, cells_.at(i));
+//       }
+//     }
+//   } else if (direction_ == down) {        /// down -> downLeft
+//     direction_ = downLeft;
+//     position_ = std::make_pair(position_.first - 1, position_.second - 1);
+//     if (position_.first == 0) {
+//       cells_ = expandM(exp_left, cells_);
+//       h_limit_.inferior -= kExpansion;
+//       position_ = std::make_pair(position_.first+kExpansion, position_.second);
+//     } else if (position_.second == 0) {
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_left, cells_.at(i));
+//       }
+//       position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//       v_limit_.inferior -= kExpansion;
+//     } else if ((position_.first == 0)
+//                 && (position_.second == 0)) {
+//       v_limit_.inferior -= kExpansion;
+//       h_limit_.inferior -= kExpansion;
+//       position_ = std::make_pair(position_.first+kExpansion, position_.second);
+//       position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//       cells_ = expandM(exp_left, cells_);
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_left, cells_.at(i));
+//       }
+//     }
+//   } else if (direction_ == leftUp) {      /// leftup -> up
+//     direction_ = up;
+//     position_ = std::make_pair(position_.first, position_.second + 1);
+//     if (position_.second == static_cast<int>(cells_.at(0).size()) - 1) {
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_right, cells_.at(i));
+//       }
+//       v_limit_.superior += kExpansion;
+//     }
+//   } else if (direction_ == rightUp) {     /// rightUp -> right
+//     direction_ = right;
+//     position_ = std::make_pair(position_.first, position_.second + 1);
+//     if ((size_t)position_.first == cells_.size() - 1) {
+//        cells_ = expandM(exp_right, cells_);
+//       h_limit_.superior += kExpansion;
+//     }
+//   } else if (direction_ == rightUp) {     /// rightUp -> up
+//     direction_ = up;
+//     position_ = std::make_pair(position_.first, position_.second + 1);
+//     if (position_.second == static_cast<int>(cells_.at(0).size()) - 1) {
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_right, cells_.at(i));
+//       }
+//       v_limit_.superior += kExpansion;
+//     }
+//   } else if (direction_ == downRight) {   /// downRight -> down
+//     direction_ = down;
+//     position_ = std::make_pair(position_.first, position_.second - 1);
+//     if (position_.second == 0) {
+//       for (size_t i {0}; i < cells_.size(); ++i) {
+//         cells_ .at(i) = expand(exp_left, cells_.at(i));
+//       }
+//       position_ = std::make_pair(position_.first, position_.second+kExpansion);
+//       v_limit_.inferior -= kExpansion;
+//     }
+//   } else if (direction_ == downLeft) {    /// downLeft -> left
+//     direction_ = left;
+//     position_ = std::make_pair(position_.first - 1, position_.second);
+//     if (position_.first == 0) {
+//       cells_ = expandM(exp_left, cells_);
+//       h_limit_.inferior -= kExpansion;
+//       position_ = std::make_pair(position_.first+kExpansion, position_.second);
+//     }
+//   }
+// }
+
+////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// MUNDO // FINITO ////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+// void Ant::FinityTurnLeft() {
+//   if (direction_ == left) {
+//     // direction_ = downLeft;
+//     // if ((position_.first == 0) && (position_.second == 0)) {
+//     //   position_ = std::make_pair(cells_.size() - 1, cells_.at(0).size() - 1);
+//     // } else if (position_.first == 0) {
+//     //   position_ = std::make_pair(cells_.size() - 1, position_.second - 1);
+//     // } else if (position_.second == 0) {
+//     //   position_ = std::make_pair(position_.first - 1, cells_.at(0).size() - 1);
+//     // } else {
+//     //   position_ = std::make_pair(position_.first - 1, position_.second - 1);
+//     // }
+//   } else if (direction_ == up) {
+//     // direction_ = leftUp;
+//     // if ((position_.first == 0) && (position_.second == cells_.at(0).size() - 1)) {
+//     //   position_ = std::make_pair(cells_.size() - 1, 0);
+//     // } else if (position_.first == 0) {
+//     //   position_ = std::make_pair(cells_.size() - 1, position_.second + 1);
+//     // } else if (position_.second == cells_.at(0).size() - 1) {
+//     //   position_ = std::make_pair(position_.first - 1, 0);
+//     // } else {
+//     //   position_ = std::make_pair(position_.first - 1, position_.second + 1);
+//     // }
+//   } else if (direction_ == right) {
+//     // direction_ = rightUp;
+//     // if ((position_.first == cells_.size() - 1) && (position_.second == cells_.at(0).size() - 1)) {
+//     //   position_ = std::make_pair(0, 0);
+//     // } else if (position_.first == cells_.size() - 1) {
+//     //   position_ = std::make_pair(0, position_.second + 1);
+//     // } else if (position_.second == cells_.at(0).size() - 1) {
+//     //   position_ = std::make_pair(position_.first + 1, 0);
+//     // } else {
+//     //   position_ = std::make_pair(position_.first + 1, position_.second + 1);
+//     // }
+//   } else if (direction_ == down) {
+//     // direction_ = downRight;
+//     // if ((position_.first == cells_.size() - 1) && (position_.second == 0)) {
+//     //   position_ = std::make_pair(0, cells_.at(0).size() - 1);
+//     // } else if (position_.first == cells_.size() - 1) {
+//     //   position_ = std::make_pair(0, position_.second - 1);
+//     // } else if (position_.second == 0) {
+//     //   position_ = std::make_pair(position_.first + 1, cells_.at(0).size() - 1);
+//     // } else {
+//     //   position_ = std::make_pair(position_.first + 1, position_.second - 1);
+//     // }
+//   } else if (direction_ == downLeft) {
+//     // direction_ = down;
+//     // if (position_.second == 0) {
+//     //   position_ = std::make_pair(position_.first, cells_.at(0).size() - 1);
+//     // } else {
+//     //   position_ = std::make_pair(position_.first, position_.second - 1);
+//     // }
+//   } else if (direction_ == downRight) {
+//     // direction_ = right;
+//     // if (position_.first == cells_.size() - 1) {
+//     //   position_ = std::make_pair(0, position_.second);
+//     // } else {
+//     //   position_ = std::make_pair(position_.first + 1, position_.second);
+//     // }
+//   } else if (direction_ == leftUp) {
+//     // direction_ = left;
+//     // if (position_.first == 0) {
+//     //   position_ = std::make_pair(cells_.size() - 1, position_.second);
+//     // } else {
+//     //   position_ = std::make_pair(position_.first - 1, position_.second);
+//     // }
+//   } else if (direction_ == rightUp) {
+//     // direction_ = up;
+//     // if (position_.second >= cells_.at(0).size() - 1) {
+//     //   position_ = std::make_pair(position_.first, 0);
+//     // } else {
+//     //   position_ = std::make_pair(position_.first, position_.second + 1);
+//     // }
+//   }
+// }
+
+
+
+// void Ant::FinityTurnRight() {
+//   if (direction_ == left) {
+//     direction_ = leftUp;
+//     if ((position_.first == 0) && (position_.second == cells_.at(0).size() - 1)) {
+//       position_ = std::make_pair(cells_.size() - 1, 0);
+//     } else if (position_.first == 0) {
+//       position_ = std::make_pair(cells_.size() - 1, position_.second + 1);
+//     } else if (position_.second == cells_.at(0).size() - 1) {
+//       position_ = std::make_pair(position_.first - 1, 0);
+//     } else {
+//       position_ = std::make_pair(position_.first - 1, position_.second + 1);
+//     }
+//   } else if (direction_ == up) {
+//     direction_ = rightUp;
+//     if ((position_.first == cells_.size() - 1) && (position_.second == cells_.at(0).size() - 1)) {
+//       position_ = std::make_pair(0, 0);
+//     } else if (position_.first == cells_.size() - 1) {
+//       position_ = std::make_pair(0, position_.second + 1);
+//     } else if (position_.second == cells_.at(0).size() - 1) {
+//       position_ = std::make_pair(position_.first + 1, 0);
+//     } else {
+//       position_ = std::make_pair(position_.first + 1, position_.second + 1);
+//     }
+//   } else if (direction_ == right) {
+//     direction_ = downRight;
+//     if ((position_.first == cells_.size() - 1) && (position_.second == 0)) {
+//       position_ = std::make_pair(0, cells_.at(0).size() - 1);
+//     } else if (position_.first == cells_.size() - 1) {
+//       position_ = std::make_pair(0, position_.second - 1);
+//     } else if (position_.second == 0) {
+//       position_ = std::make_pair(position_.first + 1, cells_.at(0).size() - 1);
+//     } else {
+//       position_ = std::make_pair(position_.first + 1, position_.second - 1);
+//     }
+//   } else if (direction_ == down) {
+//     direction_ = downLeft;
+//     if ((position_.first == 0) && (position_.second == 0)) {
+//       position_ = std::make_pair(cells_.size() - 1, cells_.at(0).size() - 1);
+//     } else if (position_.first == 0) {
+//       position_ = std::make_pair(cells_.size() - 1, position_.second - 1);
+//     } else if (position_.second == 0) {
+//       position_ = std::make_pair(position_.first - 1, cells_.at(0).size() - 1);
+//     } else {
+//       position_ = std::make_pair(position_.first - 1, position_.second - 1);
+//     }
+//   } else if (direction_ == downLeft) {
+//     direction_ = left;
+//     if (position_.first == 0) {
+//       position_ = std::make_pair(cells_.size() - 1, position_.second);
+//     } else {
+//       position_ = std::make_pair(position_.first - 1, position_.second);
+//     }
+//   } else if (direction_ == downRight) {
+//     direction_ = down;
+//     if (position_.second == 0) {
+//       position_ = std::make_pair(position_.first, cells_.at(0).size() - 1);
+//     } else {
+//       position_ = std::make_pair(position_.first, position_.second - 1);
+//     }
+//   } else if (direction_ == leftUp) {
+//     direction_ = up;
+//     if (position_.second >= cells_.at(0).size() - 1) {
+//       position_ = std::make_pair(position_.first, 0);
+//     } else {
+//       position_ = std::make_pair(position_.first, position_.second + 1);
+//     }
+//   } else if (direction_ == rightUp) {
+//     direction_ = right;
+//     if (position_.first == cells_.size() - 1) {
+//       position_ = std::make_pair(0, position_.second);
+//     } else {
+//       position_ = std::make_pair(position_.first + 1, position_.second);
+//     }
+//   }
+// }
+
+
+Ant& Ant::operator=(const Ant& second) {
+  this->direction_ = second.direction_;
+  this->h_limit_ = second.h_limit_;
+  this->v_limit_ = second.v_limit_;
+  this->position_ = second.position_;
+  this->cells_ = second.cells_;
+  this->infinity_ = second.infinity_;
+  return *this;
+}
+
+
+void Ant::Turn(const TurnDir& new_direction) {
+  if (new_direction == turn_left) {
+    switch (direction_) {
+    case left:
+      direction_ = downLeft;
+      break;
+    case downLeft:
+      direction_ = down;
+      break;
+    case down:
+      direction_ = downRight;
+      break;
+    case downRight:
+      direction_ = right;
+      break;
+    case right:
+      direction_ = rightUp;
+      break;
+    case rightUp:
+      direction_ = up;
+      break;
+    case up:
+      direction_ = leftUp;
+      break;
+    case leftUp:
+      direction_ = left;
+      break;
+    default:
+      direction_ = up;
+      break;
+    }
+  } else if (new_direction == turn_right) {
+    switch (direction_) {
+    case left:
+      direction_ = leftUp;
+      break;
+    case leftUp:
+      direction_ = up;
+      break;
+    case up:
+      direction_ = rightUp;
+      break;
+    case rightUp:
+      direction_ = right;
+      break;
+    case right:
+      direction_ = downRight;
+      break;
+    case downRight:
+      direction_ = down;
+      break;
+    case down:
+      direction_ = downLeft;
+      break;
+    case downLeft:
+      direction_ = left;
+      break;
+    default:
+      direction_ = up;
+      break;
+    }
+  }
+}
+
+
+void Ant::InfAdvance() {
+  switch (direction_) {
+  case up:
+    position_ = std::make_pair(position_.first, position_.second + 1);
+    if (position_.second == static_cast<int>(cells_.at(0).size()) - 1) {
+      for (size_t i {0}; i < cells_.size(); ++i) {
+        cells_ .at(i) = expand(exp_right, cells_.at(i));
+      }
+      v_limit_.superior += kExpansion;
+    }
+    break;
+  case right:
+    position_ = std::make_pair(position_.first + 1, position_.second);
+    if ((size_t)position_.first == cells_.size() - 1) {
+       cells_ = expandM(exp_right, cells_);
+      h_limit_.superior += kExpansion;
+    }
+    break;
+  case down:
+    position_ = std::make_pair(position_.first, position_.second - 1);
+    if (position_.second == 0) {
+      for (size_t i {0}; i < cells_.size(); ++i) {
+        cells_ .at(i) = expand(exp_left, cells_.at(i));
+      }
+      v_limit_.inferior -= kExpansion;
+      position_ = std::make_pair(position_.first, position_.second+kExpansion);
+    }
+    break;
+  case left:
+    position_ = std::make_pair(position_.first - 1, position_.second);
+    if (position_.first == 0) {
+      cells_ = expandM(exp_left, cells_);
+      h_limit_.inferior -= kExpansion;
+      position_ = std::make_pair(position_.first+kExpansion, position_.second);
+    }
+    break;
+  /// DIAGONALES
+  case leftUp:
     position_ = std::make_pair(position_.first - 1, position_.second + 1);
     if ((position_.first == 0)
                 && ((size_t)position_.second >= cells_.at(0).size() - 1)) {
@@ -125,31 +665,28 @@ void Ant::InfinityTurnLeft() {
         cells_ .at(i) = expand(exp_right, cells_.at(i));
       }
     }
-  } else if (direction_ == left) {        /// left -> downLeft
-    direction_ = downLeft;
-    position_ = std::make_pair(position_.first - 1, position_.second - 1);
-    if ((position_.first == 0) && (position_.second == 0)) {
-      v_limit_.inferior -= kExpansion;
-      h_limit_.inferior -= kExpansion;
-      position_ = std::make_pair(position_.first+kExpansion, position_.second);
-      position_ = std::make_pair(position_.first, position_.second+kExpansion);
-       cells_ = expandM(exp_left, cells_);
+    break;
+  case rightUp:
+    position_ = std::make_pair(position_.first + 1, position_.second + 1);
+    if ((size_t)position_.first == cells_.size() - 1) {
+       cells_ = expandM(exp_right, cells_);
+      h_limit_.superior += kExpansion;
+    } else if ((size_t)position_.second >= cells_.at(0).size() - 1) {
       for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_left, cells_.at(i));
+        cells_ .at(i) = expand(exp_right, cells_.at(i));
       }
-    } else if (position_.first == 0) {
-      cells_ = expandM(exp_left, cells_);
-      h_limit_.inferior -= kExpansion;
-      position_ = std::make_pair(position_.first+kExpansion, position_.second);
-    } else if (position_.second == 0) {
+      v_limit_.superior += kExpansion;
+    } else if (((size_t)position_.first >= cells_.at(0).size() - 1)
+                && ((size_t)position_.second >= cells_.at(0).size() - 1)) {
+       cells_ = expandM(exp_right, cells_);
+        v_limit_.superior += kExpansion;
+        h_limit_.superior += kExpansion;
       for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_left, cells_.at(i));
+        cells_ .at(i) = expand(exp_right, cells_.at(i));
       }
-      v_limit_.inferior -= kExpansion;
-      position_ = std::make_pair(position_.first, position_.second+kExpansion);
     }
-  } else if (direction_ == down) {        /// down -> downRight
-    direction_ = downRight;
+    break;
+  case downRight:
     position_ = std::make_pair(position_.first + 1, position_.second - 1);
       if ((size_t)position_.first == cells_.size() - 1) {
          cells_ = expandM(exp_right, cells_);
@@ -170,134 +707,19 @@ void Ant::InfinityTurnLeft() {
         cells_ .at(i) = expand(exp_left, cells_.at(i));
       }
     }
-  } else if (direction_ == right) {       /// right -> rightUp
-    direction_ = rightUp;
-    position_ = std::make_pair(position_.first + 1, position_.second + 1);
-    if ((size_t)position_.first == cells_.size() - 1) {
-       cells_ = expandM(exp_right, cells_);
-      h_limit_.superior += kExpansion;
-    } else if ((size_t)position_.second >= cells_.at(0).size() - 1) {
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_right, cells_.at(i));
-      }
-      v_limit_.superior += kExpansion;
-    } else if (((size_t)position_.first >= cells_.at(0).size() - 1)
-                && ((size_t)position_.second >= cells_.at(0).size() - 1)) {
-       cells_ = expandM(exp_right, cells_);
-        v_limit_.superior += kExpansion;
-        h_limit_.superior += kExpansion;
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_right, cells_.at(i));
-      }
-    }
-  } else if (direction_ == leftUp) {        /// DIAGONALES
-    direction_ = left;                    /// leftUp -> left
-    position_ = std::make_pair(position_.first - 1, position_.second);
-    if (position_.first == 0) {
-      cells_ = expandM(exp_left, cells_);
-      h_limit_.inferior -= kExpansion;
-      position_ = std::make_pair(position_.first+kExpansion, position_.second);
-    }
-  } else if (direction_ == downLeft) {    /// downLeft -> down
-    direction_ = down;
-    position_ = std::make_pair(position_.first, position_.second - 1);
-    if (position_.second == 0) {
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_left, cells_.at(i));
-      }
+    break;
+  case downLeft:
+    position_ = std::make_pair(position_.first - 1, position_.second - 1);
+    if ((position_.first == 0) && (position_.second == 0)) {
       v_limit_.inferior -= kExpansion;
+      h_limit_.inferior -= kExpansion;
+      position_ = std::make_pair(position_.first+kExpansion, position_.second);
       position_ = std::make_pair(position_.first, position_.second+kExpansion);
-    }
-  } else if (direction_ == downRight) {   /// downRight -> right
-    direction_ = right;
-    position_ = std::make_pair(position_.first + 1, position_.second);
-    if ((size_t)position_.first == cells_.size() - 1) {
-       cells_ = expandM(exp_right, cells_);
-      h_limit_.superior += kExpansion;
-    }
-  } else if (direction_ == rightUp) {     /// rightUp -> up
-    direction_ = up;
-    position_ = std::make_pair(position_.first, position_.second + 1);
-    if (position_.second == static_cast<int>(cells_.at(0).size()) - 1) {
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_right, cells_.at(i));
-      }
-      v_limit_.superior += kExpansion;
-    }
-  }
-}
-
-
-
-void Ant::InfinityTurnRight() {
-  if (direction_ == left) {               /// left -> leftUp
-    direction_ = leftUp;
-    position_ = std::make_pair(position_.first - 1, position_.second + 1);
-    if (position_.first == 0) {
-      cells_ = expandM(exp_left, cells_);
-      h_limit_.inferior -= kExpansion;
-      position_ = std::make_pair(position_.first+kExpansion, position_.second);
-    } else if ((size_t)position_.second >= cells_.at(0).size() - 1) {
-      v_limit_.superior += kExpansion;
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_right, cells_.at(i));
-      }
-    } else if ((position_.first == 0)
-                && ((size_t)position_.second >= cells_.at(0).size() - 1)) {
-      h_limit_.inferior -= kExpansion;
-      v_limit_.superior += kExpansion;
-      position_ = std::make_pair(position_.first+kExpansion, position_.second);
        cells_ = expandM(exp_left, cells_);
       for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_right, cells_.at(i));
-      }
-    }
-  } else if (direction_ == up) {          /// up -> rightUp
-    direction_ = rightUp;
-    position_ = std::make_pair(position_.first + 1, position_.second + 1);
-    if ((size_t)position_.first == cells_.size() - 1) {
-       cells_ = expandM(exp_right, cells_);
-      h_limit_.superior += kExpansion;
-    } else if ((size_t)position_.second >= cells_.at(0).size() - 1) {
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_right, cells_.at(i));
-      }
-      v_limit_.superior += kExpansion;
-    } else if (((size_t)position_.first >= cells_.at(0).size() - 1)
-                && ((size_t)position_.second >= cells_.at(0).size() - 1)) {
-      cells_ = expandM(exp_right, cells_);
-      v_limit_.superior += kExpansion;
-      h_limit_.superior += kExpansion;
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_right, cells_.at(i));
-      }
-    }
-  } else if (direction_ == right) {       /// right -> downRight
-    direction_ = downRight;
-    position_ = std::make_pair(position_.first + 1, position_.second - 1);
-      if ((size_t)position_.first == cells_.size() - 1) {
-        cells_ = expandM(exp_right, cells_);
-        h_limit_.inferior += kExpansion;
-    } else if (position_.second == 0) {
-      for (size_t i {0}; i < cells_.size(); ++i) {
         cells_ .at(i) = expand(exp_left, cells_.at(i));
       }
-      position_ = std::make_pair(position_.first, position_.second+kExpansion);
-      v_limit_.inferior -= kExpansion;
-    } else if (((size_t)position_.first == cells_.size() - 1)
-              && (position_.second == 0)) {
-      cells_ = expandM(exp_right, cells_);
-      v_limit_.inferior -= kExpansion;
-      h_limit_.inferior += kExpansion;
-      position_ = std::make_pair(position_.first, position_.second+kExpansion);
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_left, cells_.at(i));
-      }
-    }
-  } else if (direction_ == down) {        /// down -> downLeft
-    direction_ = downLeft;
-    position_ = std::make_pair(position_.first - 1, position_.second - 1);
-    if (position_.first == 0) {
+    } else if (position_.first == 0) {
       cells_ = expandM(exp_left, cells_);
       h_limit_.inferior -= kExpansion;
       position_ = std::make_pair(position_.first+kExpansion, position_.second);
@@ -305,83 +727,48 @@ void Ant::InfinityTurnRight() {
       for (size_t i {0}; i < cells_.size(); ++i) {
         cells_ .at(i) = expand(exp_left, cells_.at(i));
       }
-      position_ = std::make_pair(position_.first, position_.second+kExpansion);
       v_limit_.inferior -= kExpansion;
-    } else if ((position_.first == 0)
-                && (position_.second == 0)) {
-      v_limit_.inferior -= kExpansion;
-      h_limit_.inferior -= kExpansion;
-      position_ = std::make_pair(position_.first+kExpansion, position_.second);
       position_ = std::make_pair(position_.first, position_.second+kExpansion);
-      cells_ = expandM(exp_left, cells_);
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_left, cells_.at(i));
-      }
     }
-  } else if (direction_ == leftUp) {      /// leftup -> up
-    direction_ = up;
-    position_ = std::make_pair(position_.first, position_.second + 1);
-    if (position_.second == static_cast<int>(cells_.at(0).size()) - 1) {
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_right, cells_.at(i));
-      }
-      v_limit_.superior += kExpansion;
-    }
-  } else if (direction_ == rightUp) {     /// rightUp -> right
-    direction_ = right;
-    position_ = std::make_pair(position_.first, position_.second + 1);
-    if ((size_t)position_.first == cells_.size() - 1) {
-       cells_ = expandM(exp_right, cells_);
-      h_limit_.superior += kExpansion;
-    }
-  } else if (direction_ == rightUp) {     /// rightUp -> up
-    direction_ = up;
-    position_ = std::make_pair(position_.first, position_.second + 1);
-    if (position_.second == static_cast<int>(cells_.at(0).size()) - 1) {
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_right, cells_.at(i));
-      }
-      v_limit_.superior += kExpansion;
-    }
-  } else if (direction_ == downRight) {   /// downRight -> down
-    direction_ = down;
-    position_ = std::make_pair(position_.first, position_.second - 1);
-    if (position_.second == 0) {
-      for (size_t i {0}; i < cells_.size(); ++i) {
-        cells_ .at(i) = expand(exp_left, cells_.at(i));
-      }
-      position_ = std::make_pair(position_.first, position_.second+kExpansion);
-      v_limit_.inferior -= kExpansion;
-    }
-  } else if (direction_ == downLeft) {    /// downLeft -> left
-    direction_ = left;
-    position_ = std::make_pair(position_.first - 1, position_.second);
-    if (position_.first == 0) {
-      cells_ = expandM(exp_left, cells_);
-      h_limit_.inferior -= kExpansion;
-      position_ = std::make_pair(position_.first+kExpansion, position_.second);
-    }
+    break;
+  default:
+    break;
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////// MUNDO // FINITO ////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 
-void Ant::FinityTurnLeft() {
-  if (direction_ == left) {
-    direction_ = downLeft;
-    if ((position_.first == 0) && (position_.second == 0)) {
-      position_ = std::make_pair(cells_.size() - 1, cells_.at(0).size() - 1);
-    } else if (position_.first == 0) {
-      position_ = std::make_pair(cells_.size() - 1, position_.second - 1);
-    } else if (position_.second == 0) {
-      position_ = std::make_pair(position_.first - 1, cells_.at(0).size() - 1);
+void Ant::FinAdvance() {
+  switch (direction_) {
+  case up:
+    if (position_.second >= cells_.at(0).size() - 1) {
+      position_ = std::make_pair(position_.first, 0);
     } else {
-      position_ = std::make_pair(position_.first - 1, position_.second - 1);
+      position_ = std::make_pair(position_.first, position_.second + 1);
     }
-  } else if (direction_ == up) {
-    direction_ = leftUp;
+    break;
+  case right:
+    if (position_.first == cells_.size() - 1) {
+      position_ = std::make_pair(0, position_.second);
+    } else {
+      position_ = std::make_pair(position_.first + 1, position_.second);
+    }
+    break;
+  case down:
+    if (position_.second == 0) {
+      position_ = std::make_pair(position_.first, cells_.at(0).size() - 1);
+    } else {
+      position_ = std::make_pair(position_.first, position_.second - 1);
+    }
+    break;
+  case left:
+    if (position_.first == 0) {
+      position_ = std::make_pair(cells_.size() - 1, position_.second);
+    } else {
+      position_ = std::make_pair(position_.first - 1, position_.second);
+    }
+    break;
+  /// DIAGONALES
+  case leftUp:
     if ((position_.first == 0) && (position_.second == cells_.at(0).size() - 1)) {
       position_ = std::make_pair(cells_.size() - 1, 0);
     } else if (position_.first == 0) {
@@ -391,8 +778,8 @@ void Ant::FinityTurnLeft() {
     } else {
       position_ = std::make_pair(position_.first - 1, position_.second + 1);
     }
-  } else if (direction_ == right) {
-    direction_ = rightUp;
+    break;
+  case rightUp:
     if ((position_.first == cells_.size() - 1) && (position_.second == cells_.at(0).size() - 1)) {
       position_ = std::make_pair(0, 0);
     } else if (position_.first == cells_.size() - 1) {
@@ -402,8 +789,8 @@ void Ant::FinityTurnLeft() {
     } else {
       position_ = std::make_pair(position_.first + 1, position_.second + 1);
     }
-  } else if (direction_ == down) {
-    direction_ = downRight;
+    break;
+  case downRight:
     if ((position_.first == cells_.size() - 1) && (position_.second == 0)) {
       position_ = std::make_pair(0, cells_.at(0).size() - 1);
     } else if (position_.first == cells_.size() - 1) {
@@ -413,75 +800,8 @@ void Ant::FinityTurnLeft() {
     } else {
       position_ = std::make_pair(position_.first + 1, position_.second - 1);
     }
-  } else if (direction_ == downLeft) {
-    direction_ = down;
-    if (position_.second == 0) {
-      position_ = std::make_pair(position_.first, cells_.at(0).size() - 1);
-    } else {
-      position_ = std::make_pair(position_.first, position_.second - 1);
-    }
-  } else if (direction_ == downRight) {
-    direction_ = right;
-    if (position_.first == cells_.size() - 1) {
-      position_ = std::make_pair(0, position_.second);
-    } else {
-      position_ = std::make_pair(position_.first + 1, position_.second);
-    }
-  } else if (direction_ == leftUp) {
-    direction_ = left;
-    if (position_.first == 0) {
-      position_ = std::make_pair(cells_.size() - 1, position_.second);
-    } else {
-      position_ = std::make_pair(position_.first - 1, position_.second);
-    }
-  } else if (direction_ == rightUp) {
-    direction_ = up;
-    if (position_.second >= cells_.at(0).size() - 1) {
-      position_ = std::make_pair(position_.first, 0);
-    } else {
-      position_ = std::make_pair(position_.first, position_.second + 1);
-    }
-  }
-}
-
-
-
-void Ant::FinityTurnRight() {
-  if (direction_ == left) {
-    direction_ = leftUp;
-    if ((position_.first == 0) && (position_.second == cells_.at(0).size() - 1)) {
-      position_ = std::make_pair(cells_.size() - 1, 0);
-    } else if (position_.first == 0) {
-      position_ = std::make_pair(cells_.size() - 1, position_.second + 1);
-    } else if (position_.second == cells_.at(0).size() - 1) {
-      position_ = std::make_pair(position_.first - 1, 0);
-    } else {
-      position_ = std::make_pair(position_.first - 1, position_.second + 1);
-    }
-  } else if (direction_ == up) {
-    direction_ = rightUp;
-    if ((position_.first == cells_.size() - 1) && (position_.second == cells_.at(0).size() - 1)) {
-      position_ = std::make_pair(0, 0);
-    } else if (position_.first == cells_.size() - 1) {
-      position_ = std::make_pair(0, position_.second + 1);
-    } else if (position_.second == cells_.at(0).size() - 1) {
-      position_ = std::make_pair(position_.first + 1, 0);
-    } else {
-      position_ = std::make_pair(position_.first + 1, position_.second + 1);
-    }
-  } else if (direction_ == right) {
-    direction_ = downRight;
-    if ((position_.first == cells_.size() - 1) && (position_.second == 0)) {
-      position_ = std::make_pair(0, cells_.at(0).size() - 1);
-    } else if (position_.first == cells_.size() - 1) {
-      position_ = std::make_pair(0, position_.second - 1);
-    } else if (position_.second == 0) {
-      position_ = std::make_pair(position_.first + 1, cells_.at(0).size() - 1);
-    } else {
-      position_ = std::make_pair(position_.first + 1, position_.second - 1);
-    }
-  } else if (direction_ == down) {
-    direction_ = downLeft;
+    break;
+  case downLeft:
     if ((position_.first == 0) && (position_.second == 0)) {
       position_ = std::make_pair(cells_.size() - 1, cells_.at(0).size() - 1);
     } else if (position_.first == 0) {
@@ -491,46 +811,10 @@ void Ant::FinityTurnRight() {
     } else {
       position_ = std::make_pair(position_.first - 1, position_.second - 1);
     }
-  } else if (direction_ == downLeft) {
-    direction_ = left;
-    if (position_.first == 0) {
-      position_ = std::make_pair(cells_.size() - 1, position_.second);
-    } else {
-      position_ = std::make_pair(position_.first - 1, position_.second);
-    }
-  } else if (direction_ == downRight) {
-    direction_ = down;
-    if (position_.second == 0) {
-      position_ = std::make_pair(position_.first, cells_.at(0).size() - 1);
-    } else {
-      position_ = std::make_pair(position_.first, position_.second - 1);
-    }
-  } else if (direction_ == leftUp) {
-    direction_ = up;
-    if (position_.second >= cells_.at(0).size() - 1) {
-      position_ = std::make_pair(position_.first, 0);
-    } else {
-      position_ = std::make_pair(position_.first, position_.second + 1);
-    }
-  } else if (direction_ == rightUp) {
-    direction_ = right;
-    if (position_.first == cells_.size() - 1) {
-      position_ = std::make_pair(0, position_.second);
-    } else {
-      position_ = std::make_pair(position_.first + 1, position_.second);
-    }
+    break;
+  default:
+    break;
   }
-}
-
-
-Ant& Ant::operator=(const Ant& second) {
-  this->direction_ = second.direction_;
-  this->h_limit_ = second.h_limit_;
-  this->v_limit_ = second.v_limit_;
-  this->position_ = second.position_;
-  this->cells_ = second.cells_;
-  this->infinity_ = second.infinity_;
-  return *this;
 }
 
 

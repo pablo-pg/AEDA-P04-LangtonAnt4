@@ -20,7 +20,6 @@ Universe::Universe(World& world, const WorldType& type,
   world_ = &world;
   steps_ = world_->GetSteps();
   ant_list_ = ants;
-  // ant_ = world_->GetAnt();
   infinity_ = type;
   cells_ = world_->GetMatrix();
   int paint_mode;
@@ -43,16 +42,13 @@ Universe::Universe(World& world, const WorldType& type,
 void Universe::Simulate(const int& paint_mode) {
   for (uint i {0}; i < steps_; ++i) {
     int north_count = 0;
-    system("clear");
+    // system("clear");
     if (paint_mode == 1) {
       StandardPaint(i);
     } else {
       Paint(i);
     }
-    north_count = NorthCount();      /// MODIFICACIÓN
     std::this_thread::sleep_for(std::chrono::milliseconds(50));
-    std::cout << "Número de hormigas apuntando al norte: " << north_count
-              << std::endl;
     for (size_t i{0}; i < ant_list_.size(); ++i) {
       ant_list_.at(i).SetPrevMatrix(cells_);
       ant_list_.at(i).Move();
@@ -187,13 +183,4 @@ KnowAnt Universe::AreAnts(const uint& x, const uint& y) {
 }
 
 
-int Universe::NorthCount() {
-  int count = 0;
-  for (int i{0}; i < ant_list_.size(); ++i) {
-    if (ant_list_.at(i).GetDirection() == up) {
-      count++;
-    }
-  }
-  return count;
-}
 

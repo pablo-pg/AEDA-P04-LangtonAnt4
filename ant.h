@@ -62,10 +62,13 @@ class Ant {
   Ant& operator=(const Ant& second);
 
  private:
-  void InfinityTurnLeft();
-  void InfinityTurnRight();
-  void FinityTurnLeft();
-  void FinityTurnRight();
+  // void InfinityTurnLeft();
+  // void InfinityTurnRight();
+  // void FinityTurnLeft();
+  // void FinityTurnRight();
+  void Turn(const TurnDir& new_direction);
+  void InfAdvance();
+  void FinAdvance();
   void RecalculatePos();
   Directions direction_;
   Limits h_limit_;

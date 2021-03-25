@@ -18,6 +18,7 @@ enum Directions {left, leftUp, up, rightUp, right, downRight, down, downLeft};
 enum States {black = 0, white};
 enum ExpandDirection {exp_left, exp_right};
 enum WorldType {finit_world, infinity_world};
+enum TurnDir {turn_left, turn_right};
 
 struct Limits {
   int inferior;

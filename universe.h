@@ -32,7 +32,6 @@ class Universe {
   void StandardPaint(const uint& step);
   void Paint(const uint& step);
   KnowAnt AreAnts(const uint& i, const uint& j);
-  int NorthCount();     /// MODIFICACIÓN
   uint steps_;
   std::deque<Ant> ant_list_;
   World* world_;
