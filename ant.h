@@ -34,18 +34,8 @@ class Ant {
  public:
   Ant() {}
   virtual ~Ant() {}
-  // Ant(const Ant& second);
-  // Ant(const uint& size, const Matrix<States>& orig_cells,
-  //     const WorldType& infinity);
-  // Ant(const uint& h_size, const uint& v_size,
-  //     const Matrix<States>& orig_cells, const WorldType& infinity);
-  // Ant(const int& x_pos, const int& y_pos, Directions direction,
-  //     const Matrix<States>& orig_cells);
 
   virtual void Move() = 0;
-
-  void SetData(const int& x_pos, const int& y_pos, Directions direction,
-               const Matrix<States>&orig_cells);
 
   uint GetHPos() const {return position_.first;}
   uint GetVPos() const {return position_.second;}
@@ -54,6 +44,8 @@ class Ant {
   Directions GetDirection() const {return direction_;}
   Matrix<States> GetCell() const {return cells_;}
 
+  void SetData(const int& x_pos, const int& y_pos, Directions direction,
+               const Matrix<States>&orig_cells);
   void SetPrevMatrix(const Matrix<States> matrix) { prev_cells_ = matrix;}
   void SetMatrix(const Matrix<States> matrix) { cells_ = matrix;}
   void SetLimits(const Limits& h, const Limits& v) {

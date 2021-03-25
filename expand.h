@@ -35,8 +35,8 @@ Matrix<States> expandM(const ExpandDirection& dir, const Matrix<States>& matrix,
             const int expansion = kExpansion);
 
 
-std::vector<States> expand(const ExpandDirection& dir, const std::vector<States>& vector,
-            const int expansion = kExpansion);
+std::vector<States> expand(const ExpandDirection& dir,
+      const std::vector<States>& vector, const int expansion = kExpansion);
 
 #endif    // EXPAND_H_
 

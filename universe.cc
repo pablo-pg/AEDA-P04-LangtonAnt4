@@ -67,10 +67,10 @@ void Universe::Simulate(const int& paint_mode) {
 void Universe::StandardPaint(const uint& step) {
   for (size_t i {0}; i < ant_list_.size(); ++i) {
     std::cout << "Hormiga " << i + 1 << " en ("
-      << static_cast<int>(ant_list_.at(i)->GetHInfLimit() + ant_list_.at(i)->GetHPos())
-      << ", "
-      << static_cast<int>(ant_list_.at(i)->GetVInfLimit() + ant_list_.at(i)->GetVPos())
-      << ")" << std::endl;
+      << static_cast<int>(ant_list_.at(i)->GetHInfLimit()
+                          + ant_list_.at(i)->GetHPos()) << ", "
+      << static_cast<int>(ant_list_.at(i)->GetVInfLimit()
+                          + ant_list_.at(i)->GetVPos()) << ")" << std::endl;
   }
   std::cout << "Paso: " << step + 1 << std::endl;
   uint init_i = cells_.at(0).size() - 1;
@@ -112,10 +112,10 @@ void Universe::StandardPaint(const uint& step) {
 void Universe::Paint(const uint& step) {
   for (size_t i {0}; i < ant_list_.size(); ++i) {
     std::cout << "Hormiga " << i + 1 << " en ("
-      << static_cast<int>(ant_list_.at(i)->GetHInfLimit() + ant_list_.at(i)->GetHPos())
-      << ", "
-      << static_cast<int>(ant_list_.at(i)->GetVInfLimit() + ant_list_.at(i)->GetVPos())
-      << ")" << std::endl;
+      << static_cast<int>(ant_list_.at(i)->GetHInfLimit()
+                          + ant_list_.at(i)->GetHPos()) << ", "
+      << static_cast<int>(ant_list_.at(i)->GetVInfLimit()
+                          + ant_list_.at(i)->GetVPos()) << ")" << std::endl;
   }
   std::cout << "Paso: " << step + 1 << std::endl;
   std::cout << "\u2554";

@@ -267,7 +267,8 @@ void Ant_B::FinAdvance() {
     break;
   /// DIAGONALES
   case leftUp:
-    if ((position_.first == 0) && (position_.second == cells_.at(0).size() - 1)) {
+    if ((position_.first == 0)
+        && (position_.second == cells_.at(0).size() - 1)) {
       position_ = std::make_pair(cells_.size() - 1, 0);
     } else if (position_.first == 0) {
       position_ = std::make_pair(cells_.size() - 1, position_.second + 1);
@@ -278,7 +279,8 @@ void Ant_B::FinAdvance() {
     }
     break;
   case rightUp:
-    if ((position_.first == cells_.size() - 1) && (position_.second == cells_.at(0).size() - 1)) {
+    if ((position_.first == cells_.size() - 1)
+        && (position_.second == cells_.at(0).size() - 1)) {
       position_ = std::make_pair(0, 0);
     } else if (position_.first == cells_.size() - 1) {
       position_ = std::make_pair(0, position_.second + 1);

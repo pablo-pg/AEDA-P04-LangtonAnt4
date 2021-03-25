@@ -40,12 +40,14 @@ Ant& Ant::operator=(const Ant& second) {
 void Ant::RecalculatePos() {
   if (cells_.size() != prev_cells_.size()) {
     if (cells_.at(position_.first) != prev_cells_.at(position_.first)) {
-      position_ = std::make_pair(position_.first + kExpansion, position_.second);
+      position_ = std::make_pair(position_.first + kExpansion,
+                                 position_.second);
     }
   }
   if (cells_.at(0).size() != prev_cells_.at(0).size()) {
     if (cells_.at(position_.second) != prev_cells_.at(position_.second)) {
-      position_ = std::make_pair(position_.first, position_.second + kExpansion);
+      position_ = std::make_pair(position_.first,
+                                 position_.second + kExpansion);
     }
   }
 }
