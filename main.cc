@@ -205,15 +205,6 @@ std::deque<Ant*> AntMenu(World* world) {
   mapped_directions["rightUp"] = rightUp;
   mapped_directions["downLeft"] = downLeft;
   mapped_directions["downRight"] = downRight;
-  bool chosen_ant = 0;
-  int ant_type;
-  do {
-    std::cout << "Quiere hormigas en el sentido normal (1) o invertido (2)?  ";
-    std::cin >> ant_type;
-    if ((ant_type == 1) || (ant_type == 2)) {
-      chosen_ant = 1;
-    }
-  } while (chosen_ant == 0);
   for (size_t i {0}; i < ants_num; ++i) {
     std::cout << "Introduzca la posición en X de la hormiga (desde "
               << "-" << world->GetMatrix().size() / 2 << " hasta "
@@ -229,6 +220,15 @@ std::deque<Ant*> AntMenu(World* world) {
               << " leftUp, rightUp, downRight, downLeft): ";
     std::string dir;
     std::cin >> dir;
+    bool chosen_ant = 0;
+    int ant_type;
+    do {
+      std::cout << "Quiere hormigas en el sentido normal (1) o invertido (2)?  ";
+      std::cin >> ant_type;
+      if ((ant_type == 1) || (ant_type == 2)) {
+        chosen_ant = 1;
+      }
+    } while (chosen_ant == 0);
     Ant* new_ant;
     if (ant_type == 1)
       new_ant = new Ant_A();
